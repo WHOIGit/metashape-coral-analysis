@@ -19,9 +19,139 @@ The workflow consists of two main steps:
 
 ## Installation
 
-1. Install Agisoft Metashape Professional
-2. Ensure Metashape Python API is available in your Python environment
-3. Clone this repository
+### Step 0: Install Python
+
+If you don't already have Python installed:
+
+**Windows:**
+1. Download Python from [python.org](https://www.python.org/downloads/)
+2. Run the installer and check "Add Python to PATH"
+3. Verify installation: `python --version`
+
+**macOS:**
+```bash
+# Using Homebrew (recommended)
+brew install python
+
+# Or download from python.org
+```
+
+**Linux:**
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install python3 python3-pip python3-venv
+
+# CentOS/RHEL
+sudo yum install python3 python3-pip
+```
+
+### Step 1: Install Agisoft Metashape Professional
+
+1. Download the Agisoft Metashape Python 3 Module from the [official website](https://www.agisoft.com/downloads/installer/). Use the link corresponding to your operating system.
+
+### Step 1.5: Configure License Server (If Using Network License)
+
+If you're using a network license server instead of a local license, you need to link your client machine to the license server.
+
+Create a `server.lic` file with the following content:
+```
+[license_server]
+host = <server_ip>
+port = <port>
+```
+
+Place this file in the appropriate directory:
+
+**Windows:**
+```bash
+# Create directory if it doesn't exist
+mkdir "C:\ProgramData\Agisoft\Licensing\licenses"
+
+# Place server.lic file in this directory
+```
+
+**macOS:**
+```bash
+# Create directory with proper permissions
+sudo mkdir -p "/Library/Application Support/Agisoft/Licensing/licenses"
+sudo chmod -R 777 "/Library/Application Support/Agisoft/Licensing"
+
+# Place server.lic file in this directory
+```
+
+**Linux:**
+```bash
+# Create directory if it doesn't exist
+sudo mkdir -p "/var/tmp/agisoft/licensing/licenses"
+
+# Place server.lic file in this directory
+```
+
+**Note:** Default port is 5842 if not specified. This configuration is compatible with Metashape Professional 2.0.1+.
+
+For detailed instructions, see the [official Agisoft documentation](https://agisoft.freshdesk.com/support/solutions/articles/31000169378--metashape-2-x-linking-client-machine-to-the-license-server).
+
+### Step 2: Set Up Python Virtual Environment
+
+Create an isolated Python environment for this project:
+
+```bash
+# Create a virtual environment
+python -m venv metashape-env
+
+# Activate the virtual environment
+# On Windows:
+metashape-env\Scripts\activate
+# On macOS/Linux:
+source metashape-env/bin/activate
+```
+
+### Step 3: Install Metashape Python API
+
+The Metashape Python module needs to be installed from the Metashape installation directory:
+
+**Windows:**
+```bash
+# Navigate to your Metashape installation (typically):
+cd "C:\Program Files\Agisoft\Metashape Pro"
+
+# Copy the Python module to your environment
+pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-win_amd64.whl
+```
+
+**macOS:**
+```bash
+# Navigate to your Metashape installation (typically):
+cd "/Applications/Metashape Pro/Contents/MacOS"
+
+# Copy the Python module to your environment
+pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-macosx_10_12_x86_64.whl
+```
+
+**Linux:**
+```bash
+# Navigate to your Metashape installation directory
+cd /opt/metashape-pro  # or wherever you installed it
+
+# Install the wheel file
+pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-linux_x86_64.whl
+```
+
+### Step 4: Clone This Repository
+
+```bash
+git clone https://github.com/WHOIGit/metashape-coral-analysis.git
+cd metashape-coral-analysis
+```
+
+### Step 5: Verify Installation
+
+Test that Metashape is properly installed:
+
+```bash
+python -c "import Metashape; print('Metashape version:', Metashape.app.version)"
+```
 
 ## Usage
 
