@@ -10,8 +10,8 @@ The workflow consists of two main steps:
 
 ## Requirements
 
-- Python 3.7+
-- Agisoft Metashape Professional
+- Python 3.10+
+- Agisoft Metashape Python 3 Module
 - Required Python packages:
   - `argparse` (built-in)
   - `pathlib` (built-in)
@@ -50,9 +50,9 @@ sudo yum install python3 python3-pip
 
 1. Download the Agisoft Metashape Python 3 Module from the [official website](https://www.agisoft.com/downloads/installer/). Use the link corresponding to your operating system.
 
-### Step 1.5: Configure License Server (If Using Network License)
+### Step 1.5: Configure License Server File
 
-If you're using a network license server instead of a local license, you need to link your client machine to the license server.
+If you're using a floating license instead of a local license, you need to link your client machine to the license server.
 
 Create a `server.lic` file with the following content:
 ```
@@ -113,29 +113,29 @@ The Metashape Python module needs to be installed from the Metashape installatio
 
 **Windows:**
 ```bash
-# Navigate to your Metashape installation (typically):
-cd "C:\Program Files\Agisoft\Metashape Pro"
+# Navigate to your Downloads folder where Metashape was downloaded
+cd "%USERPROFILE%\Downloads"
 
-# Copy the Python module to your environment
-pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-win_amd64.whl
+# Install the Python module
+pip install ./Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-win_amd64.whl
 ```
 
 **macOS:**
 ```bash
-# Navigate to your Metashape installation (typically):
-cd "/Applications/Metashape Pro/Contents/MacOS"
+# Navigate to your Downloads folder where Metashape was downloaded
+cd ~/Downloads
 
-# Copy the Python module to your environment
-pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-macosx_10_12_x86_64.whl
+# Install the Python module
+pip install ./Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-macosx_10_12_x86_64.whl
 ```
 
 **Linux:**
 ```bash
-# Navigate to your Metashape installation directory
-cd /opt/metashape-pro  # or wherever you installed it
+# Navigate to your Downloads folder where Metashape was downloaded
+cd ~/Downloads
 
 # Install the wheel file
-pip install ./python/Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-linux_x86_64.whl
+pip install ./Metashape-2.1.0-cp37.cp38.cp39.cp310.cp311-none-linux_x86_64.whl
 ```
 
 ### Step 4: Clone This Repository
@@ -154,6 +154,35 @@ python -c "import Metashape; print('Metashape version:', Metashape.app.version)"
 ```
 
 ## Usage
+
+### Step 0: Organize Coral Images
+
+Before running the 3D reconstruction, organize your coral photographs into the required directory structure. Each coral specimen should have its own subdirectory containing all the photographs for that specimen.
+
+Create the following directory structure:
+```
+coral_photos/
+├── coral_001/
+│   ├── IMG_001.jpg
+│   ├── IMG_002.jpg
+│   ├── IMG_003.jpg
+│   └── ...
+├── coral_002/
+│   ├── IMG_001.jpg
+│   ├── IMG_002.jpg
+│   ├── IMG_003.jpg
+│   └── ...
+├── coral_003/
+│   └── ...
+└── ...
+```
+
+**Important Notes:**
+- Each coral specimen must be in its own subdirectory
+- Only JPEG files (.jpg and .jpeg) will be processed
+- Directory names will be used as coral identifiers in the output
+- Ensure all images for a specimen are in the same subdirectory
+- The script will recursively search for JPEG files in each subdirectory
 
 ### Step 1: Generate 3D Models
 
